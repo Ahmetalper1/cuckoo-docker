@@ -1,0 +1,63 @@
+version: "2"
+
+services:
+  cuckoo:
+    privileged: true
+    image: cuckoo-docker:2.0.7
+    build:
+      context: ./
+      dockerfile: src/Dockerfile.prod
+    ports:
+      - "8000:8000"
+      - "2042:2042"
+    links:
+      - mongo
+      - postgres
+    networks:
+      ext:
+        ipv4_address: 172.30.201.100
+      int:
+        ipv4_address: 192.168.201.100
+    restart: always
+    cap_add:
+      - NET_ADMIN
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      ext:
+        ipv4_address: 172.30.201.4
+    restart: always
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: cuckoo
+    networks:
+      ext:
+        ipv4_address: 172.30.201.3
+    restart: always
+
+networks:
+  int:
+    driver: macvlan
+    driver_opts:
+      parent: virbr201
+    ipam:
+      config:
+        - subnet: 192.168.201.0/24
+          gateway: 192.168.201.1
+  ext:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.201.0/24
+          gateway: 172.30.201.1
+
+
+

@@ -1,0 +1,8 @@
+<network>
+  <name>lab-network</name>
+  <uuid>260ffe0a-71b4-4d1c-8a1f-0399cd4721b6</uuid>
+  <bridge name="virbr201" stp="on" delay="0"/>
+  <mac address="52:54:00:af:63:fc"/>
+  <domain name="network"/>
+  <ip address="192.168.201.1" netmask="255.255.255.0"/>
+</network>
