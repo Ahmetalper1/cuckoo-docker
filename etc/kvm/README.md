@@ -21,3 +21,5 @@ Edit the XML and change the <emulator> element to point to the real location of 
 # sudo virsh snapshot-create-as --domain Win7-x64_Cuckoo1 --name Clean-R
 
 
+other notes:
+cuckoo conf uses libvirt tls for machinery. use create_cert.sh
