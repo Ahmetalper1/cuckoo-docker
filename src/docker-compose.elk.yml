@@ -1,0 +1,28 @@
+version: "2"
+
+services:
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    container_name: elastic
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 49671:9200
+    networks:
+      - ext
+  
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.3.2
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic:49671
+    ports:
+      - "49672:5601"
+    networks:
+      - ext
