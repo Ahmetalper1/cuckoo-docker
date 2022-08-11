@@ -48,7 +48,9 @@ RUN set -x \
     && rm -rf /tmp/*
 
 
-RUN pip install -U --no-cache-dir MarkupSafe==1.1.1 itsdangerous==1.1.0 configparser==4.0.2 distorm3==3.4.4 setuptools pycrypto ujson cryptography psycopg2
+RUN pip install -U --no-cache-dir pyrsistent==0.16.1 MarkupSafe==1.1.1 itsdangerous==1.1.0 configparser==4.0.2 distorm3==3.4.4 setuptools pycrypto ujson  cryptography psycopg2 jsonschema==3.2.0 werkzeug==0.16.0 Mako==1.1.0 python-editor==1.0.3 urllib3==1.25.7 tlslite==0.4.9 SFlock==0.3.3 tlslite-ng==0.7.6 pyOpenSSL==18.0.0
+
+  
 
 RUN apt update && apt install -y vim
 COPY cuckoo /opt/cuckoo
@@ -58,9 +60,11 @@ RUN python setup.py sdist develop
 RUN cuckoo init
 RUN cuckoo community
 
-COPY etc/cert/client /opt/cert
+
 COPY etc/conf /root/.cuckoo/conf
 COPY etc/supervisord.conf /root/.cuckoo/
 COPY etc/cuckoo.sh /opt/
+
+RUN chmod +x /opt/cuckoo.sh
 
 CMD ["/opt/cuckoo.sh"]

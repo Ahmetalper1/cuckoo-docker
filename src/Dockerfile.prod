@@ -53,6 +53,6 @@ RUN pip install -U --no-cache-dir pip setuptools distorm3 pycrypto ujson cryptog
 RUN pip install -U --no-cache-dir cuckoo
 
 COPY etc/conf /root/conf
-COPY etc/supervisor.conf /root/
+COPY etc/supervisord.conf /root/
 
 CMD ["/lib/systemd/systemd"]
